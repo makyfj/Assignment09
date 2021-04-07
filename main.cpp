@@ -1,10 +1,11 @@
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include <algorithm>
 
 void printUnsortedArray(int numbers[]) {
 
-  std::cout << "UNSORTED ARRAY" << std::endl;
+  std::cout << "UNSORTED ARRAY:" << std::endl;
 
   for (int i = 0; i < 25; i++) {
     std::cout << numbers[i] << " ";
@@ -14,13 +15,31 @@ void printUnsortedArray(int numbers[]) {
 
 void printSortedArray(int numbers[]) {
 
-  std::cout << "SORTED ARRAY" << std::endl;
+  std::cout << "SORTED ARRAY:" << std::endl;
 
   for (int i = 0; i < 25; i++) {
     std::cout << numbers[i] << " ";
   }
   std::cout << std::endl;
 }
+// Shuffles the array
+void random_shuffle(int numbers[], int numbersSize) {
+
+    int temp;
+    srand(time(NULL));
+
+    for (int i = numbersSize - 1; i > 0; i--) {
+
+        // Pick a random index
+        int j = rand() % (i + 1);
+
+        // Swap numbers[i] with a random array position
+        temp = numbers[i];
+        numbers[i] = numbers[j];
+        numbers[j] = temp;
+    }
+}
+
 void selectionSort(int numbers[], int numbersSize) {
 
   printUnsortedArray(numbers);
@@ -54,9 +73,52 @@ void selectionSort(int numbers[], int numbersSize) {
   printSortedArray(numbers);
 }
 
-void insertionSort();
+void insertionSort(int numbers[], int numbersSize) {
 
-void bubbleSort();
+    printUnsortedArray(numbers);
+
+    std::cout << std::endl;
+
+    int i = 0;
+    int temp = 0;
+    int j = 0;
+
+    for (i = 1; i < numbersSize; i++) {
+        j = i;
+        // Insert numbers[i] into sorted part
+        // stopping once numbers[i] in correct position
+        while (j > 0 && numbers[j] < numbers[j - 1]) {
+
+            // Swap numbers
+            temp = numbers[j];
+            numbers[j] = numbers[j - 1];
+            numbers[j - 1] = temp;
+            --j;
+        }
+    }
+    printSortedArray(numbers);
+}
+
+void bubbleSort(int numbers[], int numbersSize) {
+
+    printUnsortedArray(numbers);
+
+    std::cout << std::endl;
+
+    int temp;
+
+    for (int i = 0; i < numbersSize; i++) {
+        for (int j = 0; j < numbersSize - i - 1; j++) {
+            if (numbers[j] > numbers[j + 1]) {
+                temp = numbers[i];
+                numbers[j] = numbers[j + 1];
+                numbers[j + 1] = temp;
+            }
+        }
+    }
+    printSortedArray(numbers);
+
+}
 
 void mergeSort();
 
@@ -100,24 +162,42 @@ void menu() {
     if (choice == 1) {
 
       std::cout << "SELECTION SORT\n";
+      std::cout << "--------------\n";
       selectionSort(numbers, numbersSize);
+      random_shuffle(numbers, numbersSize);
     }
 
     else if (choice == 2) {
 
       std::cout << "INSERTION SORT\n";
+      std::cout << "--------------\n";
+      std::cout << std::endl;
+
+      insertionSort(numbers, numbersSize);
+      random_shuffle(numbers, numbersSize);
     } else if (choice == 3) {
 
       std::cout << "BUBBLE SORT\n";
+      std::cout << "-----------\n";
+      std::cout << std::endl;
+
+      bubbleSort(numbers, numbersSize);
+      random_shuffle(numbers, numbersSize);
     } else if (choice == 4) {
 
       std::cout << "MERGE SORT\n";
+      std::cout << "----------\n";
+      std::cout << std::endl;
     } else if (choice == 5) {
 
       std::cout << "QUICK SORT\n";
+      std::cout << "----------\n";
+      std::cout << std::endl;
     } else if (choice == 6) {
 
       std::cout << "HEAP SORT\n";
+      std::cout << "---------\n";
+      std::cout << std::endl;
     } else if (choice == 7) {
       std::cout << "EXIT" << std::endl;
       std::cout << std::endl;
