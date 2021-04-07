@@ -1,7 +1,14 @@
+#include <algorithm>
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
-#include <algorithm>
+
+void performaceTime() {
+  // Performance time
+  const clock_t bc = clock();
+  std::cout << "Performance time:" << std::endl;
+  std::cout << float(clock() - bc) / CLOCKS_PER_SEC << "sec";
+}
 
 void printUnsortedArray(int numbers[]) {
 
@@ -22,22 +29,23 @@ void printSortedArray(int numbers[]) {
   }
   std::cout << std::endl;
 }
+
 // Shuffles the array
 void random_shuffle(int numbers[], int numbersSize) {
 
-    int temp;
-    srand(time(NULL));
+  int temp;
+  srand(time(NULL));
 
-    for (int i = numbersSize - 1; i > 0; i--) {
+  for (int i = numbersSize - 1; i > 0; i--) {
 
-        // Pick a random index
-        int j = rand() % (i + 1);
+    // Pick a random index
+    int j = rand() % (i + 1);
 
-        // Swap numbers[i] with a random array position
-        temp = numbers[i];
-        numbers[i] = numbers[j];
-        numbers[j] = temp;
-    }
+    // Swap numbers[i] with a random array position
+    temp = numbers[i];
+    numbers[i] = numbers[j];
+    numbers[j] = temp;
+  }
 }
 
 void selectionSort(int numbers[], int numbersSize) {
@@ -71,53 +79,58 @@ void selectionSort(int numbers[], int numbersSize) {
   }
 
   printSortedArray(numbers);
+
+  performaceTime();
 }
 
 void insertionSort(int numbers[], int numbersSize) {
 
-    printUnsortedArray(numbers);
+  printUnsortedArray(numbers);
 
-    std::cout << std::endl;
+  std::cout << std::endl;
 
-    int i = 0;
-    int temp = 0;
-    int j = 0;
+  int i = 0;
+  int temp = 0;
+  int j = 0;
 
-    for (i = 1; i < numbersSize; i++) {
-        j = i;
-        // Insert numbers[i] into sorted part
-        // stopping once numbers[i] in correct position
-        while (j > 0 && numbers[j] < numbers[j - 1]) {
+  for (i = 1; i < numbersSize; i++) {
+    j = i;
+    // Insert numbers[i] into sorted part
+    // stopping once numbers[i] in correct position
+    while (j > 0 && numbers[j] < numbers[j - 1]) {
 
-            // Swap numbers
-            temp = numbers[j];
-            numbers[j] = numbers[j - 1];
-            numbers[j - 1] = temp;
-            --j;
-        }
+      // Swap numbers
+      temp = numbers[j];
+      numbers[j] = numbers[j - 1];
+      numbers[j - 1] = temp;
+      --j;
     }
-    printSortedArray(numbers);
+  }
+  printSortedArray(numbers);
+
+  performaceTime();
 }
 
 void bubbleSort(int numbers[], int numbersSize) {
 
-    printUnsortedArray(numbers);
+  printUnsortedArray(numbers);
 
-    std::cout << std::endl;
+  std::cout << std::endl;
 
-    int temp;
+  int temp;
 
-    for (int i = 0; i < numbersSize; i++) {
-        for (int j = 0; j < numbersSize - i - 1; j++) {
-            if (numbers[j] > numbers[j + 1]) {
-                temp = numbers[i];
-                numbers[j] = numbers[j + 1];
-                numbers[j + 1] = temp;
-            }
-        }
+  for (int i = 0; i < numbersSize; i++) {
+    for (int j = 0; j < numbersSize - i - 1; j++) {
+      if (numbers[j] > numbers[j + 1]) {
+        temp = numbers[i];
+        numbers[j] = numbers[j + 1];
+        numbers[j + 1] = temp;
+      }
     }
-    printSortedArray(numbers);
+  }
+  printSortedArray(numbers);
 
+  performaceTime();
 }
 
 void mergeSort();
@@ -141,7 +154,7 @@ void menu() {
     numbers[i] = (rand() % 1000 + 1);
   }
 
-  // Get numbers size
+  // Get numbers array size
   int numbersSize = sizeof(numbers) / sizeof(numbers[0]);
 
   do {
@@ -175,6 +188,7 @@ void menu() {
 
       insertionSort(numbers, numbersSize);
       random_shuffle(numbers, numbersSize);
+
     } else if (choice == 3) {
 
       std::cout << "BUBBLE SORT\n";
@@ -183,24 +197,30 @@ void menu() {
 
       bubbleSort(numbers, numbersSize);
       random_shuffle(numbers, numbersSize);
+
     } else if (choice == 4) {
 
       std::cout << "MERGE SORT\n";
       std::cout << "----------\n";
       std::cout << std::endl;
+
     } else if (choice == 5) {
 
       std::cout << "QUICK SORT\n";
       std::cout << "----------\n";
       std::cout << std::endl;
+
     } else if (choice == 6) {
 
       std::cout << "HEAP SORT\n";
       std::cout << "---------\n";
       std::cout << std::endl;
+
     } else if (choice == 7) {
+
       std::cout << "EXIT" << std::endl;
       std::cout << std::endl;
+
     } else {
       // Test if the user enter valid choices
       std::cout << "Invalid Choice, Try Again" << std::endl;
@@ -213,10 +233,6 @@ void menu() {
 int main() {
 
   menu();
-
-  // Program time
-  /* const clock_t bc = clock(); */
-  /* std::cout << float(clock() - bc) / CLOCKS_PER_SEC << "sec"; */
 
   return 0;
 }
