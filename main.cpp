@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 #include <vector>
 
 void menu() {
@@ -66,6 +67,10 @@ void heapSort();
 int main() {
 
   menu();
+
+  // Program time
+  /* const clock_t bc = clock(); */
+  /* std::cout << float(clock() - bc) / CLOCKS_PER_SEC << "sec"; */
 
   return 0;
 }
