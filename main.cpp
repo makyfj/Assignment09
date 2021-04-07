@@ -6,15 +6,15 @@
 void performaceTime() {
   // Performance time
   const clock_t bc = clock();
-  std::cout << "Performance time:" << std::endl;
-  std::cout << float(clock() - bc) / CLOCKS_PER_SEC << "sec";
+  std::cout << "\nPerformance time:" << std::endl;
+  std::cout << float(clock() - bc) / CLOCKS_PER_SEC << " seconds\n";
 }
 
 void printUnsortedArray(int numbers[]) {
 
   std::cout << "UNSORTED ARRAY:" << std::endl;
 
-  for (int i = 0; i < 25; i++) {
+  for (int i = 0; i < 50; i++) {
     std::cout << numbers[i] << " ";
   }
   std::cout << std::endl;
@@ -24,7 +24,7 @@ void printSortedArray(int numbers[]) {
 
   std::cout << "SORTED ARRAY:" << std::endl;
 
-  for (int i = 0; i < 25; i++) {
+  for (int i = 0; i < 50; i++) {
     std::cout << numbers[i] << " ";
   }
   std::cout << std::endl;
@@ -120,14 +120,18 @@ void bubbleSort(int numbers[], int numbersSize) {
   int temp;
 
   for (int i = 0; i < numbersSize; i++) {
+
     for (int j = 0; j < numbersSize - i - 1; j++) {
+
       if (numbers[j] > numbers[j + 1]) {
+
         temp = numbers[i];
         numbers[j] = numbers[j + 1];
         numbers[j + 1] = temp;
       }
     }
   }
+
   printSortedArray(numbers);
 
   performaceTime();
@@ -144,7 +148,7 @@ void menu() {
   int choice;
 
   // For new numbers
-  /* srand(time(0)); */
+  srand(time(0));
 
   int numbers[1000] = {};
 
