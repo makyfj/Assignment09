@@ -139,7 +139,59 @@ void bubbleSort(int numbers[], int numbersSize) {
 
 void mergeSort();
 
-void quickSort();
+//QuickSort
+int Partition(int numbers[], int lowIndex, int highIndex) {
+
+    // Pick middle elememt
+    int midPoint = lowIndex + (highIndex - lowIndex) / 2;
+    int pivot = numbers[midPoint];
+    int temp;
+
+    bool done = false;
+
+    while (!done) {
+        // Increment lowIndex while numbers[lowIndex] < pivot
+        while (numbers[lowIndex] < pivot) {
+            lowIndex += 1;
+        }
+
+        // Decrement highIndex while pivot < numbers[highIndex]
+        while (pivot < numbers[highIndex]) {
+            highIndex -= 1;
+        }
+
+        // If zero or one elements remain, then all numbers are 
+        // partitioned. Return highIndex.
+        if (lowIndex >= highIndex) {
+            done = true;
+        }
+        else {
+            // Swap numbers[lowIndex] and numbers[highIndex]
+            temp = numbers[lowIndex];
+            numbers[lowIndex] = numbers[highIndex];
+            numbers[highIndex] = temp;
+        
+            // Update lowIndex and highIndex
+            lowIndex += 1;
+            highIndex -= 1;
+        }
+    }
+    return highIndex;
+}
+
+int * quickSort(int numbers[], int lowIndex, int highIndex) {
+
+    // Base case: If the partition size is 1 or zero 
+    // elements, then the partition is already sorted
+    if (lowIndex >= highIndex) {
+        return numbers;
+    }
+
+    int lowEndIndex = Partition(numbers, lowIndex, highIndex);
+
+    quickSort(numbers, lowIndex, lowEndIndex);
+    quickSort(numbers, lowEndIndex + 1, highIndex);
+}
 
 void heapSort();
 
@@ -177,54 +229,56 @@ void menu() {
     std::cout << std::endl;
 
     if (choice == 1) {
-
+      random_shuffle(numbers, numbersSize);
       std::cout << "SELECTION SORT\n";
       std::cout << "--------------\n";
       selectionSort(numbers, numbersSize);
-      random_shuffle(numbers, numbersSize);
     }
 
     else if (choice == 2) {
-
+      random_shuffle(numbers, numbersSize);
       std::cout << "INSERTION SORT\n";
       std::cout << "--------------\n";
       std::cout << std::endl;
 
       insertionSort(numbers, numbersSize);
-      random_shuffle(numbers, numbersSize);
 
     } else if (choice == 3) {
-
+      random_shuffle(numbers, numbersSize);
       std::cout << "BUBBLE SORT\n";
       std::cout << "-----------\n";
       std::cout << std::endl;
 
       bubbleSort(numbers, numbersSize);
-      random_shuffle(numbers, numbersSize);
+
 
     } else if (choice == 4) {
-
+      random_shuffle(numbers, numbersSize);
       std::cout << "MERGE SORT\n";
       std::cout << "----------\n";
       std::cout << std::endl;
-	  
-	  random_shuffle(numbers, numbersSize);
+
 
     } else if (choice == 5) {
-
+      random_shuffle(numbers, numbersSize);
       std::cout << "QUICK SORT\n";
       std::cout << "----------\n";
       std::cout << std::endl;
 	  
-	  random_shuffle(numbers, numbersSize);
+	  printUnsortedArray(numbers);
+      std::cout << std::endl;
+
+      quickSort(numbers, 0, numbersSize - 1);
+
+	  printSortedArray(numbers);
+
 
     } else if (choice == 6) {
-
+      random_shuffle(numbers, numbersSize);
       std::cout << "HEAP SORT\n";
       std::cout << "---------\n";
       std::cout << std::endl;
 	  
-	  random_shuffle(numbers, numbersSize);
 
     } else if (choice == 7) {
 
