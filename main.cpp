@@ -193,7 +193,52 @@ int * quickSort(int numbers[], int lowIndex, int highIndex) {
     quickSort(numbers, lowEndIndex + 1, highIndex);
 }
 
-void heapSort();
+//Heap Sort
+int* MaxHeapPercolateDown(int nodeIndex, int numbers[], int numbersSize) {
+
+    int childIndex = 2 * nodeIndex + 1;
+    int value = numbers[nodeIndex];
+    int maxValue;
+    int maxIndex;
+    int temp;
+
+    while (childIndex < numbersSize) {
+        maxValue = value;
+        maxIndex = -1;
+        for (int i = 0; i < 2 && i + childIndex < numbersSize; i++) {
+            if (numbers[i + childIndex] > maxValue) {
+                maxValue = numbers[i + childIndex];
+                maxIndex = i + childIndex;
+            }
+        }
+        if (maxValue == value) {
+            return numbers;
+        }
+        else {
+            temp = numbers[nodeIndex];
+            numbers[nodeIndex] = numbers[maxIndex];
+            numbers[maxIndex] = temp;
+            nodeIndex = maxIndex;
+            childIndex = 2 * nodeIndex + 1;
+        }
+    }
+}
+void heapSort(int numbers[], int numbersSize) {
+    int temp;
+
+    // Heapify numbers array
+    for (int i = numbersSize / 2 - 1; i >= 0; i--) {
+        MaxHeapPercolateDown(i, numbers, numbersSize);
+    }
+
+    for (int i = numbersSize - 1; i > 0; i--) {
+   
+        temp = numbers[0];
+        numbers[0] = numbers[i];
+        numbers[i] = temp;
+        MaxHeapPercolateDown(0, numbers, i);
+    }
+}
 
 void menu() {
 
@@ -277,9 +322,14 @@ void menu() {
       random_shuffle(numbers, numbersSize);
       std::cout << "HEAP SORT\n";
       std::cout << "---------\n";
-      std::cout << std::endl;
-	  
+      std::cout << "" << std::endl;
 
+      printUnsortedArray(numbers);
+      std::cout << std::endl;
+
+      heapSort(numbers, numbersSize);
+
+      printSortedArray(numbers);
     } else if (choice == 7) {
 
       std::cout << "EXIT" << std::endl;
