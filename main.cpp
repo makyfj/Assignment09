@@ -207,18 +207,24 @@ void menu() {
       std::cout << "MERGE SORT\n";
       std::cout << "----------\n";
       std::cout << std::endl;
+	  
+	  random_shuffle(numbers, numbersSize);
 
     } else if (choice == 5) {
 
       std::cout << "QUICK SORT\n";
       std::cout << "----------\n";
       std::cout << std::endl;
+	  
+	  random_shuffle(numbers, numbersSize);
 
     } else if (choice == 6) {
 
       std::cout << "HEAP SORT\n";
       std::cout << "---------\n";
       std::cout << std::endl;
+	  
+	  random_shuffle(numbers, numbersSize);
 
     } else if (choice == 7) {
 
