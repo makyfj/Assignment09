@@ -136,8 +136,39 @@ void bubbleSort(int numbers[], int numbersSize) {
 
   performaceTime();
 }
+//Mergesort
 
-void mergeSort();
+void mergeSort(int numbers[], int leftFirst, leftLast, rightLast){
+  int leftPos, leftLast, rightPos, rightLast, mergePos;
+  int mergedNumbers[];
+  while (leftPos <= leftLast && rightPos <= rightLast){
+    if (numbers[leftPos] <= numbers[rightPos]){
+      mergedNumbers[mergePos] = numbers[leftPos];
+      ++leftPos;
+    }else {
+    mergedNumbers[mergePos] = numbers[rightPos];
+    ++rightPos;
+  }
+  ++mergePos;
+}
+// when left partition not empty, add remaining elements
+  while (leftPos <= leftLast){
+    mergedNumbers[mergePos] = numbers[leftPos]
+    ++leftPos;
+    ++mergePos;
+}
+// when right partition not empty, add remaining elements
+  while (rightPos <= rightLast){
+    mergedNumbers[mergePos] = numbers[rightPos]
+    ++rightPos;
+    ++leftPos;
+}
+//copy merge number back into numbers
+  for (mergePos = 0; mergePos < mergedSize; ++mergePos){
+    numbers[leftFirst + mergePos] = mergedNumbers[mergePos];
+}
+performaceTime();
+}
 
 //QuickSort
 int Partition(int numbers[], int lowIndex, int highIndex) {
