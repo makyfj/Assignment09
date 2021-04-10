@@ -287,6 +287,7 @@ int *MaxHeapPercolateDown(int nodeIndex, int numbers[], int numbersSize) {
     }
   }
 }
+
 void heapSort(int numbers[], int numbersSize) {
   int temp;
 
@@ -383,6 +384,7 @@ void menu() {
       quickSort(numbers, 0, numbersSize - 1);
 
       printSortedArray(numbers);
+      performaceTime();
 
     } else if (choice == 6) {
       random_shuffle(numbers, numbersSize);
@@ -396,6 +398,8 @@ void menu() {
       heapSort(numbers, numbersSize);
 
       printSortedArray(numbers);
+
+      performaceTime();
     } else if (choice == 7) {
 
       std::cout << "EXIT" << std::endl;
