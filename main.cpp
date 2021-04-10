@@ -117,9 +117,9 @@ void bubbleSort(int numbers[], int numbersSize) {
 
   std::cout << std::endl;
 
-  int temp=0;
+  int temp = 0;
 
-  for (int i = 0; i < numbersSize-1; i++) {
+  for (int i = 0; i < numbersSize - 1; i++) {
 
     for (int j = 0; j < numbersSize - i - 1; j++) {
 
@@ -137,107 +137,171 @@ void bubbleSort(int numbers[], int numbersSize) {
   performaceTime();
 }
 
-void mergeSort();
+// Merges two subarrays of arr[].
+// First subarray is arr[l..m]
+// Second subarray is arr[m+1..r]
+void merge(int numbers[], int l, int m, int r) {
+  int n1 = m - l + 1;
+  int n2 = r - m;
 
-//QuickSort
+  // Create temp arrays
+  int left[n1], right[n2];
+
+  // Copy data to temp arrays L[] and R[]
+  for (int i = 0; i < n1; i++)
+    left[i] = numbers[l + i];
+  for (int j = 0; j < n2; j++)
+    right[j] = numbers[m + 1 + j];
+
+  // Merge the temp arrays back into arr[l..r]
+
+  // Initial index of first subarray
+  int i = 0;
+
+  // Initial index of second subarray
+  int j = 0;
+
+  // Initial index of merged subarray
+  int k = l;
+
+  while (i < n1 && j < n2) {
+    if (left[i] <= right[j]) {
+      numbers[k] = left[i];
+      i++;
+    } else {
+      numbers[k] = right[j];
+      j++;
+    }
+    k++;
+  }
+
+  // Copy the remaining elements of
+  // L[], if there are any
+  while (i < n1) {
+    numbers[k] = left[i];
+    i++;
+    k++;
+  }
+
+  // Copy the remaining elements of
+  // R[], if there are any
+  while (j < n2) {
+    numbers[k] = right[j];
+    j++;
+    k++;
+  }
+}
+
+// l is for left index and r is
+// right index of the sub-array
+// of arr to be sorted */
+void mergeSort(int numbers[], int l, int r) {
+  if (l >= r) {
+    return; // returns recursively
+  }
+  int m = l + (r - l) / 2;
+  mergeSort(numbers, l, m);
+  mergeSort(numbers, m + 1, r);
+  merge(numbers, l, m, r);
+}
+
+// QuickSort
 int Partition(int numbers[], int lowIndex, int highIndex) {
 
-    // Pick middle elememt
-    int midPoint = lowIndex + (highIndex - lowIndex) / 2;
-    int pivot = numbers[midPoint];
-    int temp;
+  // Pick middle elememt
+  int midPoint = lowIndex + (highIndex - lowIndex) / 2;
+  int pivot = numbers[midPoint];
+  int temp;
 
-    bool done = false;
+  bool done = false;
 
-    while (!done) {
-        // Increment lowIndex while numbers[lowIndex] < pivot
-        while (numbers[lowIndex] < pivot) {
-            lowIndex += 1;
-        }
-
-        // Decrement highIndex while pivot < numbers[highIndex]
-        while (pivot < numbers[highIndex]) {
-            highIndex -= 1;
-        }
-
-        // If zero or one elements remain, then all numbers are 
-        // partitioned. Return highIndex.
-        if (lowIndex >= highIndex) {
-            done = true;
-        }
-        else {
-            // Swap numbers[lowIndex] and numbers[highIndex]
-            temp = numbers[lowIndex];
-            numbers[lowIndex] = numbers[highIndex];
-            numbers[highIndex] = temp;
-        
-            // Update lowIndex and highIndex
-            lowIndex += 1;
-            highIndex -= 1;
-        }
+  while (!done) {
+    // Increment lowIndex while numbers[lowIndex] < pivot
+    while (numbers[lowIndex] < pivot) {
+      lowIndex += 1;
     }
-    return highIndex;
-}
 
-int * quickSort(int numbers[], int lowIndex, int highIndex) {
+    // Decrement highIndex while pivot < numbers[highIndex]
+    while (pivot < numbers[highIndex]) {
+      highIndex -= 1;
+    }
 
-    // Base case: If the partition size is 1 or zero 
-    // elements, then the partition is already sorted
+    // If zero or one elements remain, then all numbers are
+    // partitioned. Return highIndex.
     if (lowIndex >= highIndex) {
-        return numbers;
+      done = true;
+    } else {
+      // Swap numbers[lowIndex] and numbers[highIndex]
+      temp = numbers[lowIndex];
+      numbers[lowIndex] = numbers[highIndex];
+      numbers[highIndex] = temp;
+
+      // Update lowIndex and highIndex
+      lowIndex += 1;
+      highIndex -= 1;
     }
-
-    int lowEndIndex = Partition(numbers, lowIndex, highIndex);
-
-    quickSort(numbers, lowIndex, lowEndIndex);
-    quickSort(numbers, lowEndIndex + 1, highIndex);
+  }
+  return highIndex;
 }
 
-//Heap Sort
-int* MaxHeapPercolateDown(int nodeIndex, int numbers[], int numbersSize) {
+int *quickSort(int numbers[], int lowIndex, int highIndex) {
 
-    int childIndex = 2 * nodeIndex + 1;
-    int value = numbers[nodeIndex];
-    int maxValue;
-    int maxIndex;
-    int temp;
+  // Base case: If the partition size is 1 or zero
+  // elements, then the partition is already sorted
+  if (lowIndex >= highIndex) {
+    return numbers;
+  }
 
-    while (childIndex < numbersSize) {
-        maxValue = value;
-        maxIndex = -1;
-        for (int i = 0; i < 2 && i + childIndex < numbersSize; i++) {
-            if (numbers[i + childIndex] > maxValue) {
-                maxValue = numbers[i + childIndex];
-                maxIndex = i + childIndex;
-            }
-        }
-        if (maxValue == value) {
-            return numbers;
-        }
-        else {
-            temp = numbers[nodeIndex];
-            numbers[nodeIndex] = numbers[maxIndex];
-            numbers[maxIndex] = temp;
-            nodeIndex = maxIndex;
-            childIndex = 2 * nodeIndex + 1;
-        }
+  int lowEndIndex = Partition(numbers, lowIndex, highIndex);
+
+  quickSort(numbers, lowIndex, lowEndIndex);
+  quickSort(numbers, lowEndIndex + 1, highIndex);
+}
+
+// Heap Sort
+int *MaxHeapPercolateDown(int nodeIndex, int numbers[], int numbersSize) {
+
+  int childIndex = 2 * nodeIndex + 1;
+  int value = numbers[nodeIndex];
+  int maxValue;
+  int maxIndex;
+  int temp;
+
+  while (childIndex < numbersSize) {
+    maxValue = value;
+    maxIndex = -1;
+    for (int i = 0; i < 2 && i + childIndex < numbersSize; i++) {
+      if (numbers[i + childIndex] > maxValue) {
+        maxValue = numbers[i + childIndex];
+        maxIndex = i + childIndex;
+      }
     }
+    if (maxValue == value) {
+      return numbers;
+    } else {
+      temp = numbers[nodeIndex];
+      numbers[nodeIndex] = numbers[maxIndex];
+      numbers[maxIndex] = temp;
+      nodeIndex = maxIndex;
+      childIndex = 2 * nodeIndex + 1;
+    }
+  }
 }
 void heapSort(int numbers[], int numbersSize) {
-    int temp;
+  int temp;
 
-    // Heapify numbers array
-    for (int i = numbersSize / 2 - 1; i >= 0; i--) {
-        MaxHeapPercolateDown(i, numbers, numbersSize);
-    }
+  // Heapify numbers array
+  for (int i = numbersSize / 2 - 1; i >= 0; i--) {
+    MaxHeapPercolateDown(i, numbers, numbersSize);
+  }
 
-    for (int i = numbersSize - 1; i > 0; i--) {
-   
-        temp = numbers[0];
-        numbers[0] = numbers[i];
-        numbers[i] = temp;
-        MaxHeapPercolateDown(0, numbers, i);
-    }
+  for (int i = numbersSize - 1; i > 0; i--) {
+
+    temp = numbers[0];
+    numbers[0] = numbers[i];
+    numbers[i] = temp;
+    MaxHeapPercolateDown(0, numbers, i);
+  }
 }
 
 void menu() {
@@ -296,27 +360,29 @@ void menu() {
 
       bubbleSort(numbers, numbersSize);
 
-
     } else if (choice == 4) {
       random_shuffle(numbers, numbersSize);
       std::cout << "MERGE SORT\n";
       std::cout << "----------\n";
       std::cout << std::endl;
 
+      printUnsortedArray(numbers);
+      mergeSort(numbers, 0, numbersSize - 1);
+      printSortedArray(numbers);
+      performaceTime();
 
     } else if (choice == 5) {
       random_shuffle(numbers, numbersSize);
       std::cout << "QUICK SORT\n";
       std::cout << "----------\n";
       std::cout << std::endl;
-	  
-	  printUnsortedArray(numbers);
+
+      printUnsortedArray(numbers);
       std::cout << std::endl;
 
       quickSort(numbers, 0, numbersSize - 1);
 
-	  printSortedArray(numbers);
-
+      printSortedArray(numbers);
 
     } else if (choice == 6) {
       random_shuffle(numbers, numbersSize);
