@@ -28,6 +28,8 @@ void printSortedArray(int numbers[]) {
     std::cout << numbers[i] << " ";
   }
   std::cout << std::endl;
+
+  performaceTime();
 }
 
 // Shuffles the array
@@ -79,8 +81,6 @@ void selectionSort(int numbers[], int numbersSize) {
   }
 
   printSortedArray(numbers);
-
-  performaceTime();
 }
 
 void insertionSort(int numbers[], int numbersSize) {
@@ -107,8 +107,6 @@ void insertionSort(int numbers[], int numbersSize) {
     }
   }
   printSortedArray(numbers);
-
-  performaceTime();
 }
 
 void bubbleSort(int numbers[], int numbersSize) {
@@ -133,8 +131,6 @@ void bubbleSort(int numbers[], int numbersSize) {
   }
 
   printSortedArray(numbers);
-
-  performaceTime();
 }
 
 // Merges two subarrays of arr[].
@@ -370,7 +366,6 @@ void menu() {
       printUnsortedArray(numbers);
       mergeSort(numbers, 0, numbersSize - 1);
       printSortedArray(numbers);
-      performaceTime();
 
     } else if (choice == 5) {
       random_shuffle(numbers, numbersSize);
@@ -384,7 +379,6 @@ void menu() {
       quickSort(numbers, 0, numbersSize - 1);
 
       printSortedArray(numbers);
-      performaceTime();
 
     } else if (choice == 6) {
       random_shuffle(numbers, numbersSize);
@@ -399,7 +393,6 @@ void menu() {
 
       printSortedArray(numbers);
 
-      performaceTime();
     } else if (choice == 7) {
 
       std::cout << "EXIT" << std::endl;
